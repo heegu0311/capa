@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: var(--fontSize-root--big);
     font-family: var(--fontFamily);
     color: var(--color-black);
-    background-color: var(--color-darkwhite);
+    background-color: var(--color-white);
   }
 
   button, input, textarea {

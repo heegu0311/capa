@@ -49,14 +49,14 @@ const NavControl = styled.div`
 
 const Divider = styled.div`
   height: 14px;
-  border-right: 2px solid #ffffff;
+  border-right: 2px solid var(--color-white);
 `;
 
 const DrawerWrapper = styled.div`
   height: 100vh;
   width: 100vw;
   opacity: 0.5;
-  background-color: #000000;
+  background-color: var(--color-white);
 `;
 
 export default function Header() {

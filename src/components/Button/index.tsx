@@ -11,12 +11,12 @@ export const BaseBtn = styled.button`
 export const PrimaryBtn = styled(BaseBtn)`
   width: 108px;
   background: #2196f3;
-  color: #ffffff;
+  color: var(--color-white);
 `;
 
 export const LinePrimaryBtn = styled(BaseBtn)`
   width: 76px;
-  background: #ffffff;
+  background: var(--color-white);
   color: #2196f3;
   border: 1px solid #2196f3;
 `;
