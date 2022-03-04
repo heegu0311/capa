@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import media from "styled-media-query";
+import axios from "axios";
 
-import SlidingToggleBtn, {
-  LinePrimaryBtn,
-  PrimaryBtn,
-} from "./components/Button";
+import SlidingToggleBtn from "./components/Button";
 import {
   CheckBoxContainer,
   LargeFilterBtn,
@@ -14,7 +12,6 @@ import {
 } from "./components/Filter";
 import Header from "./components/Header/Header";
 import Request from "./components/Request";
-import { Status } from "./components/Status";
 
 const Page = styled.div`
   height: calc(100vh - 70px);
@@ -93,8 +90,22 @@ const Grid = styled.div`
   `}
 `;
 
+interface RequestData {
+  amount: number;
+  client: string;
+  count?: number;
+  docs?: number;
+  due: string;
+  id: number;
+  material: string[];
+  method: string[];
+  status: string;
+  title: string;
+}
+
 function App() {
   const [toggleClicked, setToggleClicked] = useState<boolean>(false);
+  const [reqList, setReqList] = useState<RequestData[]>([]);
 
   const handleToggleOnOff = (): void => {
     setToggleClicked(!toggleClicked);
@@ -108,6 +119,18 @@ function App() {
     "강철",
   ];
   const process: string[] = ["밀링", "선반"];
+
+  useEffect((): void => {
+    async function getRequests(): Promise<void> {
+      try {
+        const { data }: { data: Array<RequestData> } = await axios.get(
+          "http://localhost:3000/requests"
+        );
+        setReqList(data);
+      } catch (error) {}
+    }
+    getRequests();
+  }, []);
 
   return (
     <>
@@ -136,12 +159,9 @@ function App() {
             </FlexRow>
           </FlexRows>
           <Grid>
-            <Request />
-            <Request />
-            <Request />
-            <Request />
-            <Request />
-            <Request />
+            {reqList.map((el) => {
+              return <Request key={el.id} data={el} />;
+            })}
           </Grid>
           {/* <>
 <Header></Header>

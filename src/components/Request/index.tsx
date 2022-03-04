@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { LinePrimaryBtn, PrimaryBtn } from "../Button";
+import { Status } from "../Status";
 
 const Container = styled.div`
   height: 356px;
@@ -18,6 +19,9 @@ const Title = styled.div`
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
 `;
 
 const Partner = styled.div`
@@ -46,6 +50,9 @@ const RequestTable = styled.table`
   border-spacing: 0px 8px;
   margin: 24px 0px;
   font-size: 14px;
+  th {
+    display: none;
+  }
   tr {
     height: 20px;
     width: 334px;
@@ -65,30 +72,48 @@ const FlexContainer = styled.div`
   gap: 8px;
 `;
 
-function Request() {
+interface RequestData {
+  amount: number;
+  client: string;
+  count?: number;
+  docs?: number;
+  due: string;
+  id: number;
+  material: string[];
+  method: string[];
+  status: string;
+  title: string;
+}
+
+function Request({ data }: { data: RequestData }) {
   return (
     <Container>
-      <Title>자동차 시제품 제작</Title>
-      <Partner>A 고객사</Partner>
-      <Due>2020.12.14까지 납기</Due>
+      <Title>
+        {data.title}
+        {data.status === "상담중" && <Status>상담중</Status>}
+      </Title>
+      <Partner>{data.client}</Partner>
+      <Due>{data.due}</Due>
       <Divider />
       <RequestTable>
-        <tr>
-          <td>도면개수</td>
-          <td>2개</td>
-        </tr>
-        <tr>
-          <td>총 수량</td>
-          <td>100개</td>
-        </tr>
-        <tr>
-          <td>가공방식</td>
-          <td>밀링, 선반</td>
-        </tr>
-        <tr>
-          <td>재료</td>
-          <td>알루미늄</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>도면개수</td>
+            <td>{`${data.docs || data.count}개`}</td>
+          </tr>
+          <tr>
+            <td>총 수량</td>
+            <td>{`${data.amount}개`}</td>
+          </tr>
+          <tr>
+            <td>가공방식</td>
+            <td>{data.method.join(", ")}</td>
+          </tr>
+          <tr>
+            <td>재료</td>
+            <td>{data.material.join(", ")}</td>
+          </tr>
+        </tbody>
       </RequestTable>
       <FlexContainer>
         <PrimaryBtn>요청 내역 보기</PrimaryBtn>
