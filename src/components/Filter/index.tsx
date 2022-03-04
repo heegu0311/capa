@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { FiRotateCw } from "react-icons/fi";
 
 const BaseFilter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 32px;
+  min-height: 32px;
   width: 76px;
   border-radius: 4px;
   padding: 4px 12px;
@@ -64,7 +65,8 @@ const CheckBoxes = styled.div`
   border-radius: 4px;
   padding: 17px 12px;
   gap: 9px;
-
+  z-index: 10;
+  background: var(--color-white);
   div {
     display: flex;
     justify-content: start;
@@ -105,5 +107,25 @@ export function CheckBoxContainer({ list }: { list: string[] }): JSX.Element {
         )
       )}
     </CheckBoxes>
+  );
+}
+
+const FlexContainer = styled.div`
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2196f3;
+  span {
+    margin-left: 8px;
+  }
+`;
+
+export function ResetBtn(): JSX.Element {
+  return (
+    <FlexContainer>
+      <FiRotateCw size={20} />
+      <span>필터링 리셋</span>
+    </FlexContainer>
   );
 }
