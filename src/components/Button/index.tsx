@@ -31,6 +31,8 @@ const SlidingToggle = styled.div<Props>`
   height: 20px;
   margin: 2px 0px;
   padding: 2px 2px;
+  cursor: pointer;
+
   div:nth-of-type(1) {
     position: absolute;
     width: 20px;
@@ -42,15 +44,6 @@ const SlidingToggle = styled.div<Props>`
     margin: ${({ isToggled }: { isToggled: boolean }): string =>
       isToggled ? "-3px 0px 0px 17px" : "-3px 0px 0px -3px"};
     transition: 0.5s ease-in-out;
-
-    /* &.target {
-      margin: -3px 0px 0px -3px;
-      transition: margin 0.3s ease-in-out;
-    }
-
-    &.toggled {
-      margin: -3px 0px 0px 17px;
-    } */
   }
   div:nth-of-type(2) {
     width: 34px;

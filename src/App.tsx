@@ -29,6 +29,9 @@ const Flex = styled.div`
   height: auto;
   width: auto;
   display: flex;
+`;
+
+const FlexCenter = styled(Flex)`
   justify-content: center;
   align-items: start;
 `;
@@ -43,6 +46,12 @@ const FlexColumnFilter = styled(FlexColumn)`
   flex-direction: column;
   justify-content: start;
   gap: 4px;
+  &:nth-of-type(1) {
+    max-width: 98px;
+  }
+  &:nth-of-type(2) {
+    max-width: 76px;
+  }
 `;
 
 const FlexRow = styled(Flex)`
@@ -65,6 +74,7 @@ const FlexRows = styled(FlexRow)`
   ${media.lessThan("medium")`  
     align-items: start;
     flex-direction: column;
+    margin-bottom: 64px;
   `}
 `;
 
@@ -83,10 +93,21 @@ const Desc = styled.div`
   line-height: 24px;
 `;
 
+const Filter = styled(FlexCenter)`
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 24px;
+  cursor: pointer;
+`;
+
 const Grid = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
   gap: 16px;
+  ${media.greaterThan("medium")`
+    min-width: 1130px;
+  `}
   ${media.lessThan("medium")`
     grid-template-columns: auto;
   `}
@@ -182,6 +203,9 @@ function App() {
                   />
                 )}
               </FlexColumnFilter>
+              <Filter>
+                <ResetBtn />
+              </Filter>
             </FlexRow>
             <FlexRow>
               <SlidingToggleBtn
@@ -196,13 +220,6 @@ function App() {
               return <Request key={el.id} data={el} />;
             })}
           </Grid>
-          {/* <>
-<Header></Header>
-<PrimaryBtn>요청 내역 보기</PrimaryBtn>
-<LinePrimaryBtn>채팅하기</LinePrimaryBtn>
-<Status>상담중</Status>
-<ResetBtn />
-</> */}
         </FlexColumn>
       </Page>
     </>
