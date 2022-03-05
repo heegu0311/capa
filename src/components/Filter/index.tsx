@@ -3,7 +3,8 @@ import { FiRotateCw } from "react-icons/fi";
 import { useEffect, useState } from "react";
 
 interface Props {
-  selected: boolean;
+  selected?: boolean;
+  visible?: boolean;
 }
 
 const BaseFilter = styled.div`
@@ -80,13 +81,14 @@ export function LargeFilterBtn({
   );
 }
 
-const CheckBoxes = styled.div`
+const CheckBoxes = styled.div<Props>`
   height: auto;
   width: 130px;
   align-items: start;
   border: 1px solid #939fa5;
   border-radius: 4px;
   padding: 17px 12px;
+  display: ${({ visible }) => (visible ? "block" : "none")};
   z-index: 10;
   background: var(--color-white);
   form {
@@ -120,11 +122,13 @@ const CheckBoxes = styled.div`
 
 export function CheckBoxContainer({
   filterName,
+  visible,
   filter,
   list,
   setFilter,
 }: {
   filterName: string;
+  visible: boolean | undefined;
   filter: string[];
   list: string[] | null;
   setFilter: (active: string[]) => void;
@@ -160,28 +164,18 @@ export function CheckBoxContainer({
   };
 
   return (
-    <CheckBoxes>
+    <CheckBoxes visible={visible}>
       <form onSubmit={handleSubmit}>
         {list?.map(
           (el: string, idx: number): JSX.Element => (
             <div key={el}>
-              {filter.includes(el) ? (
-                <input
-                  type="checkbox"
-                  id={idx.toString()}
-                  name={filterName}
-                  value={el ?? ""}
-                  onChange={checkHandler}
-                />
-              ) : (
-                <input
-                  type="checkbox"
-                  id={idx.toString()}
-                  name={filterName}
-                  value={el ?? ""}
-                  onChange={checkHandler}
-                />
-              )}
+              <input
+                type="checkbox"
+                id={idx.toString()}
+                name={filterName}
+                value={el ?? ""}
+                onChange={checkHandler}
+              />
               <label htmlFor={idx.toString()}>{el}</label>
             </div>
           )

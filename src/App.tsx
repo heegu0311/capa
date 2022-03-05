@@ -265,14 +265,13 @@ function App() {
                 <LargeFilterBtn selected={Boolean(method.length)}>
                   가공방식
                 </LargeFilterBtn>
-                {dropdown === "가공방식" && (
-                  <CheckBoxContainer
-                    filterName={"dropdown"}
-                    filter={method}
-                    list={methodList}
-                    setFilter={setMethod}
-                  />
-                )}
+                <CheckBoxContainer
+                  filterName="가공방식"
+                  visible={dropdown === "가공방식"}
+                  filter={method}
+                  list={methodList}
+                  setFilter={setMethod}
+                />
               </FlexColumnFilter>
               <FlexColumnFilter
                 onMouseEnter={handleDropdown}
@@ -281,14 +280,13 @@ function App() {
                 <SmallFilterBtn selected={Boolean(material.length)}>
                   {material.length ? `재료(${material.length})` : "재료"}
                 </SmallFilterBtn>
-                {dropdown?.includes("재료") && (
-                  <CheckBoxContainer
-                    filterName={dropdown}
-                    filter={material}
-                    list={materialList}
-                    setFilter={setMaterial}
-                  />
-                )}
+                <CheckBoxContainer
+                  filterName="재료"
+                  visible={dropdown?.includes("재료")}
+                  filter={material}
+                  list={materialList}
+                  setFilter={setMaterial}
+                />
               </FlexColumnFilter>
               <Filter>
                 <ResetBtn setMethod={setMethod} setMaterial={setMaterial} />
