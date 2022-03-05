@@ -168,7 +168,7 @@ function App() {
   async function getRequests(): Promise<void> {
     try {
       const { data }: { data: RequestData[] } = await axios.get(
-        "http://localhost:3000/requests"
+        "http://localhost:3001/requests"
       );
       setReqList(data);
     } catch (error) {}
