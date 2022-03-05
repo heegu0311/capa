@@ -1,10 +1,8 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { GiHamburgerMenu } from "react-icons/gi";
 import media from "styled-media-query";
 
 import Partner from "./Partner";
-import Drawer from "./Drawer";
 import LogoImage from "./LogoImage";
 
 const StyledNav = styled.div`
@@ -52,33 +50,20 @@ const Divider = styled.div`
   border-right: 2px solid var(--color-white);
 `;
 
-const DrawerWrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-  opacity: 0.5;
-  background-color: var(--color-white);
-`;
-
-export default function Header() {
-  const [menuClicked, setMenuClicked] = useState<boolean>(false);
-
-  const handleMenuOnOff = (): void => {
-    setMenuClicked(!menuClicked);
-  };
-
+export default function Header({
+  handleMenuOnOff,
+}: {
+  handleMenuOnOff: () => void;
+}) {
   return (
-    <>
-      <StyledNav>
-        <Menu onClick={handleMenuOnOff} />
-        <LogoImage img="/images/logo.png" />
-        <NavControl>
-          <Partner partnerName="A 가공업체" />
-          <Divider />
-          <button>로그아웃</button>
-        </NavControl>
-      </StyledNav>
-      {menuClicked && <DrawerWrapper onClick={handleMenuOnOff} />}
-      <Drawer menuClicked={menuClicked} />
-    </>
+    <StyledNav>
+      <Menu onClick={handleMenuOnOff} />
+      <LogoImage img="/images/logo.png" />
+      <NavControl>
+        <Partner partnerName="A 가공업체" />
+        <Divider />
+        <button>로그아웃</button>
+      </NavControl>
+    </StyledNav>
   );
 }

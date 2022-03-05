@@ -12,6 +12,7 @@ import {
 } from "./components/Filter";
 import Header from "./components/Header/Header";
 import Request from "./components/Request";
+import Drawer from "./components/Header/Drawer";
 
 const Page = styled.div`
   height: calc(100vh - 70px);
@@ -131,8 +132,18 @@ const Empty = styled.div`
   line-height: 20px;
   color: #939fa5;
   ${media.lessThan("medium")`
-    width: auto;
+    width: 366px;
   `}
+`;
+
+const DrawerWrapper = styled.div`
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: #323d45;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
 `;
 
 interface RequestData {
@@ -155,6 +166,7 @@ function App() {
   const [dropdown, setDropdown] = useState<string | null>(null);
   const [method, setMethod] = useState<string[]>([]);
   const [material, setMaterial] = useState<string[]>([]);
+  const [menuClicked, setMenuClicked] = useState<boolean>(false);
 
   const materialList: string[] = [
     "알루미늄",
@@ -177,6 +189,10 @@ function App() {
   useEffect((): void => {
     getRequests();
   }, []);
+
+  const handleMenuOnOff = (): void => {
+    setMenuClicked(!menuClicked);
+  };
 
   const handleDropdown = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -251,7 +267,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header handleMenuOnOff={handleMenuOnOff} />
       <Page>
         <FlexContainer>
           <Title>들어온 요청</Title>
@@ -311,6 +327,8 @@ function App() {
           )}
         </FlexContainer>
       </Page>
+      {menuClicked && <DrawerWrapper onClick={handleMenuOnOff}></DrawerWrapper>}
+      <Drawer menuClicked={menuClicked} />
     </>
   );
 }

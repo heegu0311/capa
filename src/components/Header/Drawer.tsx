@@ -43,17 +43,15 @@ const NavControl = styled.div`
 
 function Drawer({ menuClicked }: { menuClicked: boolean }) {
   return (
-    <>
-      <Container className={menuClicked ? "side-drawer" : "side-drawer close"}>
-        <LogoContainer>
-          <LogoImage img="/images/logo_blue.png" />
-        </LogoContainer>
-        <NavControl>
-          <Partner partnerName="파트너정밀가공" />
-          <button>로그아웃</button>
-        </NavControl>
-      </Container>
-    </>
+    <Container className={menuClicked ? "side-drawer" : "side-drawer close"}>
+      <LogoContainer>
+        <LogoImage img="/images/logo_blue.png" />
+      </LogoContainer>
+      <NavControl>
+        <Partner partnerName="파트너정밀가공" />
+        <button>로그아웃</button>
+      </NavControl>
+    </Container>
   );
 }
 
