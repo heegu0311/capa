@@ -39,14 +39,16 @@ const FlexColumn = styled(Flex)`
 
 const FlexColumnFilter = styled(FlexColumn)`
   max-width: 98px;
-  max-height: 32px;
+  height: auto;
   flex-direction: column;
   justify-content: start;
   gap: 4px;
 `;
 
 const FlexRow = styled(Flex)`
-  align-items: center;
+  align-items: start;
+  max-height: 32px;
+
   gap: 8px;
   div {
     font-size: 14px;
@@ -106,10 +108,13 @@ interface RequestData {
 function App() {
   const [toggleClicked, setToggleClicked] = useState<boolean>(false);
   const [reqList, setReqList] = useState<RequestData[]>([]);
+  const [dropdown, setDropdown] = useState<string | null>(null);
+  const [method, setMethod] = useState<string[]>([]);
+  const [material, setMaterial] = useState<string[]>([]);
 
-  const handleToggleOnOff = (): void => {
+  function handleToggleOnOff(): void {
     setToggleClicked(!toggleClicked);
-  };
+  }
 
   const materialList: string[] = [
     "알루미늄",
@@ -123,7 +128,7 @@ function App() {
   useEffect((): void => {
     async function getRequests(): Promise<void> {
       try {
-        const { data }: { data: Array<RequestData> } = await axios.get(
+        const { data }: { data: RequestData[] } = await axios.get(
           "http://localhost:3000/requests"
         );
         setReqList(data);
@@ -132,22 +137,50 @@ function App() {
     getRequests();
   }, []);
 
+  const handleDropdown = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
+    const { textContent } = e.target as HTMLDivElement;
+    if (e.type === "mouseleave") setDropdown(null);
+    if (e.type === "mouseenter") setDropdown(textContent);
+  };
+
   return (
     <>
-      <Header></Header>
+      <Header />
       <Page>
         <FlexColumn>
           <Title>들어온 요청</Title>
           <Desc>파트너에게 딱 맞는 요청서를 찾아보세요.</Desc>{" "}
           <FlexRows>
             <FlexRow>
-              <FlexColumnFilter>
+              <FlexColumnFilter
+                onMouseEnter={handleDropdown}
+                onMouseLeave={handleDropdown}
+              >
                 <LargeFilterBtn>가공방식</LargeFilterBtn>
-                {/* <CheckBoxContainer list={process} /> */}
+                {dropdown === "가공방식" && (
+                  <CheckBoxContainer
+                    filterName={dropdown}
+                    list={process}
+                    filter={method}
+                    setFilter={setMethod}
+                  />
+                )}
               </FlexColumnFilter>
-              <FlexColumnFilter>
+              <FlexColumnFilter
+                onMouseEnter={handleDropdown}
+                onMouseLeave={handleDropdown}
+              >
                 <SmallFilterBtn>재료</SmallFilterBtn>
-                {/* <CheckBoxContainer list={materialList} /> */}
+                {dropdown === "재료" && (
+                  <CheckBoxContainer
+                    filterName={dropdown}
+                    list={materialList}
+                    filter={material}
+                    setFilter={setMaterial}
+                  />
+                )}
               </FlexColumnFilter>
             </FlexRow>
             <FlexRow>

@@ -33,24 +33,20 @@ const TriangleDown = styled.div`
 export function SmallFilterBtn({ children }: { children: string }) {
   // TODO : 선택시 색상 필터 배경섹 변경
   return (
-    <>
-      <SmallFilter>
-        {children}
-        <TriangleDown />
-      </SmallFilter>
-    </>
+    <SmallFilter>
+      {children}
+      <TriangleDown />
+    </SmallFilter>
   );
 }
 
 export function LargeFilterBtn({ children }: { children: string }) {
   // TODO : 선택시 색상 필터 배경섹 변경
   return (
-    <>
-      <LargeFilter>
-        {children}
-        <TriangleDown />
-      </LargeFilter>
-    </>
+    <LargeFilter>
+      {children}
+      <TriangleDown />
+    </LargeFilter>
   );
 }
 
@@ -90,17 +86,39 @@ const CheckBoxes = styled.div`
   }
 `;
 
-export function CheckBoxContainer({ list }: { list: string[] }): JSX.Element {
+export function CheckBoxContainer({
+  filterName,
+  list,
+  filter,
+  setFilter,
+}: {
+  filterName: string;
+  list: string[];
+  filter: string[];
+  setFilter: (active: string[]) => void;
+}): JSX.Element {
+  const addFilter = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ): void => {
+    const { value, checked } = e.target as HTMLInputElement;
+    if (checked) filter.push(value);
+    else {
+      filter.splice(Number(filter.findIndex((el: string) => el === value)), 1);
+    }
+    setFilter(Array.from(new Set(filter)));
+  };
+
   return (
     <CheckBoxes>
       {list.map(
         (el: string, idx: number): JSX.Element => (
-          <div>
+          <div key={el}>
             <input
               type="checkbox"
               id={idx.toString()}
-              name="vehicle1"
-              value="Bike"
+              name={filterName}
+              value={el}
+              onClick={addFilter}
             />
             <label htmlFor={idx.toString()}>{el}</label>
           </div>
